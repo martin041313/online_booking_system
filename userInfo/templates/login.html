@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}register{% endblock %}
+
+{% block content %}
+
+
+
+<div class="well">
+
+	<form action="" method="post" id="login-form">
+		{% csrf_token %}
+		<div class="form-row">
+
+			<label for="id_username" class="required">user name:</label>
+			<input id="id_username" maxlength="254" name="username" type="text" />
+		</div>
+		<div class="form-row">
+
+			<label for="id_password" class="required">password：</label>
+			<input id="id_password" name="password" type="password" />
+
+		</div>
+
+		<div class="submit-row">
+
+			<label>&nbsp;</label>
+			<input type="submit" class="btn" value="login" />
+		</div>
+
+	</form>
+
+	<script type="text/javascript"></script>
+
+</div>
+<div class="well">
+	I don't have an account.<label><a href="/accounts/reg/" class="btn">regiser</a></label>
+</div>
+{% endblock %}
+
+{% block js%}
+<script>
+	$('#id_username').focus();
+</script>
+{% endblock %}

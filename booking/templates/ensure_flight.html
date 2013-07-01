@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}ensure your flight booking{% endblock %}
+
+{% block content %}
+<div class="span2">
+	<div class="well sidebar-nav">
+		<ul class="nav nav-list">
+			<li class="nav-header">
+				Search
+			</li>
+			<li>
+				<a href="/booking/hotel/">search hotel</a>
+			</li>
+			<li>
+				<a href="/booking/flight/">search flight</a>
+			</li>
+			<li class="nav-header">
+				your records
+			</li>
+			<li>
+				<a href="/booking/my_record/flight/">your flight records</a>
+			</li>
+			<li>
+				<a href="/booking/my_record/hotel/">your hotel records</a>
+			</li>
+
+		</ul>
+	</div><!--/.well -->
+</div><!--/span-->
+
+<div class="span10">
+	<div class="hero-unit well">
+
+		<p>
+			ensure your flight booking
+		</p>
+		<p>
+			{{f}}
+		</p>
+		<p>the other who have experienced it </p>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th></th>
+					<th scope="col" >who</th>
+					<th scope="col" >comment</th>
+					<th scope="col" >scores</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				{% for s in sr%}
+
+				<tr class="row">
+					<td>{{s.user_id}}</td><td>{{s.comment}}</td><td>{{s.scores}}</td>
+				</tr>
+
+				{% endfor %}
+
+			</tbody>
+		</table>
+	</div>
+	<div class="row-fluid well" >
+
+		<form class="form-horizontal" action="" method="post">
+			{% csrf_token %}
+			<input type="hidden" name="post" value="yes" />
+
+			<fieldset>
+				<div id="legend" class="">
+					<legend class="">
+						submit your book request
+					</legend>
+				</div>
+				<div class="control-group">
+
+					<!-- Text input-->
+					<label class="control-label" for="input01">the number of ticket you want to book</label>
+					<div class="controls">
+						<input type="number" value="1" class="input-xlarge" name="num"/>
+						<p class="help-block">
+							do not book ticket more than it can hold
+						</p>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<div class="controls">
+						
+						<button type="submit" class="btn">
+							submit
+						</button>
+					</div>
+				</div>
+
+			</fieldset>
+		</form>
+	</div><!--/row-->
+
+</div>
+{% endblock %}
+
