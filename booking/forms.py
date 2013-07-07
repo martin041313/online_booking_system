@@ -4,8 +4,8 @@ import datetime
 from booking.data import COMPANY_CHOICES
 #这是航班搜索的表单
 class flightForm(forms.Form):
-    start = forms.CharField(label='start city',initial='阿克苏')
-    des = forms.CharField(label='destination city',initial='安庆')
+    start = forms.CharField(label='start city',initial='HangZhou')
+    des = forms.CharField(label='destination city',initial='BeiJing')
     date = forms.DateField(label='leave date',initial=datetime.date(2013, 6, 1))
     company = forms.ChoiceField(label='company',choices=COMPANY_CHOICES)
     NoneStop=(
@@ -38,7 +38,7 @@ class flightForm(forms.Form):
     sort_by = forms.ChoiceField(label='sort by',choices=SORT_BY)
 #这是酒店搜索的表单
 class hotelForm(forms.Form):
-    city = forms.CharField(label='city',initial='北京')
+    city = forms.CharField(label='city',initial='BeiJing')
     start = forms.DateField(label='check in date',initial=datetime.date(2013, 6, 1))
     last = forms.IntegerField(label='days to live in',initial=1)
     STAR_CHOICES = (

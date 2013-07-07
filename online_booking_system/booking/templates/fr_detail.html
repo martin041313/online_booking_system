@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}your flight record detail{% endblock %}
+
+{% block content %}
+<div class="span2">
+	<div class="well sidebar-nav">
+		<ul class="nav nav-list">
+			<li class="nav-header">
+				Search
+			</li>
+			<li>
+				<a href="/booking/hotel/">search hotel</a>
+			</li>
+			<li>
+				<a href="/booking/flight/">search flight</a>
+			</li>
+			<li class="nav-header">
+				your records
+			</li>
+			<li>
+				<a href="/booking/my_record/flight/">your flight records</a>
+			</li>
+			<li>
+				<a href="/booking/my_record/hotel/">your hotel records</a>
+			</li>
+			<li class="nav-header">
+				admin options
+			</li>
+			<li>
+				<a href="/sys/city/">manage cities</a>
+			</li>
+			<li>
+				<a href="/sys/company/">manage comanys</a>
+			</li>
+		</ul>
+	</div><!--/.well -->
+</div><!--/span-->
+<div class="span10">
+
+	<div class="hero-unit">
+		<p>make comment on{{fr}}</p>
+	</div>
+	<div class="row-fluid">
+		<div class="well span12">
+
+			<form enctype="multipart/form-data" action="" method="post" id="r_form">
+				{% csrf_token %}
+				<table class="table table-bordered">
+					<p>
+						<label class="required">make score:</label>
+
+						<input name="score" type="number" />
+					</p>
+					<p>
+						<label  class="required">make comment:</label>
+						<textarea rows="10" cols="30" name="comment" ></textarea>
+					</p>
+					<input type="submit" value="submit" class="default" name="save" />
+
+				</table>
+			</form>
+			</div>
+		</div><!--/span-->
+	</div><!--/row-->
+
+</div>
+{% endblock %}
+

@@ -1,0 +1,61 @@
+{% extends "sys_base.html" %}
+{% block title %}show all {{what}}{% endblock %}
+
+{% block main_head %}
+
+<p>
+	show all {{what}}
+</p>
+{% endblock %}
+
+{% block main_content %}
+
+<h1>choose one {{what}} to edit</h1>
+
+<div id="content-main">
+
+	<div class="btn-group">
+		<a href="/sys/{{what}}/add/" class="btn"> add  {{what}} </a>
+		<a href="/sys/{{what}}/load/" class="btn">load  {{what}}</a>
+	</div>
+
+	<div class="module" id="changelist">
+
+		<div class="results">
+			<table class="table table-bordered">
+
+				<tbody>
+
+					{% for rr in rs %}
+					<tr class="row">
+						<td><a href="/sys/{{what}}/{{rr.pk}}/">{{rr}}</a></td>
+					</tr>
+					{% endfor %}
+
+				</tbody>
+			</table>
+		</div>
+
+		<div class="pagination">
+			<ul>
+				{% if rs.has_previous %}
+				<li>
+					<a href="?p={{ rs.previous_page_number }}">previous</a>
+				</li>
+				{% endif %}
+				<li class="active">
+					<a>Page {{ rs.number }} of {{ rs.paginator.num_pages }}.</a>
+				</li>
+				{% if rs.has_next %}
+				<li>
+					<a href="?p={{ rs.next_page_number }}">next</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+
+	</div>
+</div>
+
+{% endblock %}
+

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "dbase.html" %}
 {% block title %}your hotel record detail{% endblock %}
 
 {% block content %}
@@ -17,11 +17,12 @@
 			<li class="nav-header">
 				your records
 			</li>
+
 			<li class="active">
-				<a href="/booking/my_record/flight/">your flight records</a>
+				<a href="/booking/my_record/hotel/">your hotel records</a>
 			</li>
 			<li>
-				<a href="/booking/my_record/hotel/">your hotel records</a>
+				<a href="/booking/my_record/flight/">your flight records</a>
 			</li>
 
 		</ul>
@@ -29,19 +30,155 @@
 </div><!--/span-->
 
 <div class="span10">
-	<div class="hero-unit">
+	<div class=" row-fluid">
 
 		<p>
 			make comment
 		</p>
-		<p>
-			{{hr}}
-		</p>
+		
+			
+			<div class="span3">
+				{{rr.hotel_id.name}}
+				<img src="/{{rr.hotel_id.img_url}}">
+			</div>
+			<div class="span3">
+				<dl class="dl-horizontal">
+
+					<dt>
+						city
+					</dt>
+					<dd>
+						{{rr.hotel_id.city_id}}
+					</dd>
+					<dt>
+						address
+					</dt>
+					<dd>
+						{{rr.hotel_id.address}}
+					</dd>
+
+					<dt>
+						phone number
+					</dt>
+					<dd>
+						{{rr.hotel_id.phone_number}}
+					</dd>
+					<dt>
+						room type
+					</dt>
+					<dd>
+						{%ifequal rr.hotel_id.room_type '1'%}
+						standard
+						{%else%}
+
+						big
+						{%endifequal%}
+					</dd>
+					<dt>
+						hotel star
+					</dt>
+					<dd>
+						{{rr.hotel_id.hotel_star}} stars
+					</dd>
+
+					<dt>
+						hot level
+					</dt>
+					<dd>
+						{{rr.hotel_id.hot_level}}
+					</dd>
+					<dt>
+						scores
+					</dt>
+					<dd>
+						{%ifequal  rr.hotel_id.scores -1 %}
+						no one comment
+						{%else%}
+						{{rr.hotel_id.scores}}
+						{%endifequal %}
+					</dd>
+					<dt>
+						price / (person day)
+					</dt>
+					<dd>
+						{{rr.hotel_id.price}}
+					</dd>
+
+				</dl>
+			</div>
+			<div class="span4">
+
+				<dl class="dl-horizontal">
+
+					<dt>
+						book date and time
+					</dt>
+					<dd>
+						{{rr.book_date}} and  {{rr.book_time}}
+					</dd>
+					<dt>
+						your score
+					</dt>
+					<dd>
+						{%ifequal  rr.scores -1 %}
+						<a href="/booking/my_record/hotel/{{rr.pk}}/" class="btn">comment now</a>
+						{%else%}
+						{{rr.scores}}
+						{%endifequal %}
+					</dd>
+					<dt>
+						your comment
+					</dt>
+					<dd>
+
+						{{rr.comment}}&nbsp;
+					</dd>
+
+					<dt>
+						checkin_date
+					</dt>
+					<dd>
+						{{rr.checkin_date}}
+					</dd>
+
+					<dt>
+						last date
+					</dt>
+					<dd>
+						{{rr.last}}
+					</dd>
+
+					<dt>
+						book number
+					</dt>
+					<dd>
+						{{rr.num}}
+					</dd>
+
+					<dt>
+						total price
+					</dt>
+					<dd>
+						{{rr.price}}
+					</dd>
+					<dt>
+						payment status
+					</dt>
+					<dd>
+						{%ifequal  rr.stat '0' %} <a href="/booking/my_record/hotel/payment/{{rr.pk}}/" class="btn">pay now</a> {%else%}
+						payed
+						{%endifequal %}
+					</dd>
+
+				</dl>
+
+			</div>
+
+		
 
 	</div>
 	<div class="row-fluid">
 		<div class="span12">
-			<div class="bs-docs-example">
 
 				<form enctype="multipart/form-data" action="" method="post" id="r_form">
 					{% csrf_token %}
@@ -49,7 +186,8 @@
 						<p>
 							<label class="required">make score:</label>
 
-							<input name="score" type="number" value="{{hr.scores}}"/>
+							<input name="score" type="number" />
+							<span class="help-block">between 0-100</span>
 						</p>
 						<p>
 							<label  class="required">make comment:</label>
@@ -59,7 +197,7 @@
 
 					</table>
 				</form>
-			</div>
+			
 		</div><!--/span-->
 	</div><!--/row-->
 

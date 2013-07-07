@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+{% block title %}
+online booking system
+{% endblock %}
+{% block css %}
+<link type="text/css" rel="stylesheet" href="/static/css/demos.css"/>
+<link type="text/css" rel="stylesheet" href="/static/css/themes/base/jquery.ui.all.css"/>
+<link type="text/css" rel="stylesheet" href="/static/css/jock-citypicker-2.0.css" />
+{% endblock %}
+{% block content %}
+<div class="span2">
+	<div class="well sidebar-nav">
+		<ul class="nav nav-list">
+			<li class="nav-header">
+				Search
+			</li>
+			<li>
+				<a href="/booking/hotel/">search hotel</a>
+			</li>
+			<li>
+				<a href="/booking/flight/">search flight</a>
+			</li>
+			<li class="nav-header">
+				your records
+			</li>
+			<li>
+				<a href="/booking/my_record/flight/">your flight records</a>
+			</li>
+			<li>
+				<a href="/booking/my_record/hotel/">your hotel records</a>
+			</li>
+			<li class="nav-header">
+				admin options
+			</li>
+			<li>
+				<a href="/sys/city/">manage cities</a>
+			</li>
+			<li>
+				<a href="/sys/company/">manage comanys</a>
+			</li>
+		</ul>
+	</div><!--/.well -->
+</div><!--/span-->
+<div class="span9">
+
+	<div class="row-fluid">
+		<div class="well row-fluid">
+			<form action="" method="post" >
+				{% csrf_token %}
+
+				<div class="span3">
+					<label for="id_start">start city:</label>
+					<input id="id_start" name="start" type="text" value="阿克苏" />
+
+					<label for="id_des">destination city:</label>
+					<input id="id_des" name="des" type="text" value="安庆" />
+
+					<label for="id_date">leave date:</label>
+					<input id="id_date" name="date" type="text" value="2013-06-01" />
+				</div>
+				<div class="span3">
+					<label for="id_company">company:</label>
+					<select id="id_company" name="company">
+						<option value="0">unlimit</option>
+						<option value="1">中国国航</option>
+						<option value="2">南方航空</option>
+						<option value="3">东方航空</option>
+						<option value="4">海南航空</option>
+						<option value="5">深圳航空</option>
+						<option value="6">厦门航空</option>
+						<option value="7">四川航空</option>
+						<option value="8">上海航空</option>
+						<option value="9">山东航空</option>
+						<option value="10">吉祥航空</option>
+						<option value="11">中联航</option>
+						<option value="12">首都航空</option>
+						<option value="13">天津航空</option>
+						<option value="14">云南祥鹏</option>
+						<option value="15">奥凯航空</option>
+						<option value="16">成都航空</option>
+						<option value="17">西部航空</option>
+						<option value="18">大新华</option>
+						<option value="19">昆明航空</option>
+						<option value="20">河北航空</option>
+						<option value="21">西藏航空</option>
+						<option value="22">华夏航空</option>
+						<option value="23">幸福航空</option>
+						<option value="24">河南航空</option>
+					</select>
+
+					<label for="id_non_stop">nonstop:</label>
+					<select id="id_non_stop" name="non_stop">
+						<option value="0">unlimit</option>
+						<option value="1">true</option>
+						<option value="2">false</option>
+					</select>
+
+					<label for="id_level">class:</label>
+					<select id="id_level" name="level">
+						<option value="0">unlimit</option>
+						<option value="1">economy</option>
+						<option value="2">business</option>
+						<option value="3">first class</option>
+					</select>
+				</div>
+				<div class="span3">
+					<label for="id_I_or_D">how to sort:</label>
+					<select id="id_I_or_D" name="I_or_D">
+						<option value="0">unsort</option>
+						<option value="1">increase</option>
+						<option value="2">decrease</option>
+					</select>
+
+					<label for="id_sort_by">sort by:</label>
+					<select id="id_sort_by" name="sort_by">
+						<option value="0">unsort</option>
+						<option value="price">price</option>
+						<option value="company_id">company</option>
+						<option value="none_stop">none_stop</option>
+						<option value="leave_time">leave_time</option>
+					</select>
+					<label>&nbsp;</label>
+					<input type="submit" class="btn" value="Submit">
+				</div>
+
+			</form>
+		</div>
+		<div class="well row-fluid">
+			<h1>query result</h1>
+			<table class="table-bordered table table-striped">
+				<thead>
+					<tr class="row">
+						<th>#</th>
+						<th>start city</th>
+						<th>destination city</th>
+						<th>take off date</th>
+						<th>take off time</th>
+						<th>arrive date</th>
+						<th>arrive time</th>
+						<th>comany</th>
+						<th>nonestop</th>
+						<th>plane class</th>
+						<th>price</th>
+						<th>opration</th>
+					</tr>
+				</thead>
+				<tbody>
+					{%for s in rs%}
+
+					<tr class="row">
+						<td>{{s.id}}</td>
+						<td>{{s.starting_id}}</td>
+						<td>{{s.destination_id}}</td>
+						<td>{{s.leave_date}}</td>
+						<td>{{s.leave_time}}</td>
+						<td>{{s.arrive_date}}</td>
+						<td>{{s.arrive_time}}</td>
+						<td>{{s.company_id}}</td>
+						<td>{{s.none_stop}}</td>
+						<td> {%ifequal s.plane_type '1'%}
+						economy
+						{%else%}
+
+						{%ifequal s.plane_type '2'%}
+						business
+						{%else%}
+						first class
+						{%endifequal%}
+						{%endifequal%} </td>
+						<td>{{s.price}}</td>
+						<td><a href="/booking/flight/{{s.pk}}/" class="btn"> book</a></td>
+					</tr>
+
+					{% endfor %}
+				</tbody>
+
+			</table>
+
+			<div class="pagination">
+				<ul>
+					{% if rs.has_previous %}
+					<li>
+						<a href="?p={{ rs.previous_page_number }}">previous</a>
+					</li>
+					{% endif %}
+					<li class="active">
+						<a>Page {{ rs.number }} of {{ rs.paginator.num_pages }}.</a>
+					</li>
+					{% if rs.has_next %}
+					<li>
+						<a href="?p={{ rs.next_page_number }}">next</a>
+					</li>
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block js %}
+
+<script type="text/javascript" src="/static/js/jquery.ui.core.js"></script>
+<script type="text/javascript" src="/static/js/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="/static/js/jquery.ui.datepicker.js"></script>
+<script type="text/javascript" src="/static/js/jquery.ui.position.js"></script>
+<script type="text/javascript" src="/static/js/jquery.ui.tooltip.js"></script>
+<script type="text/javascript" src="/static/js/jock-citypicker-2.0.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+
+		$("#id_date").datepicker({
+			dateFormat : 'yy-mm-dd'
+		});
+
+		var c = document.getElementById("id_start");
+
+		var fn1 = function(city) {
+			c.value = city;
+		};
+		c.onclick = function() {
+			citypicker.show({
+				left : 300,
+				top : 300,
+				selected : fn1
+			});
+		};
+
+		var d = document.getElementById("id_des");
+
+		var fn2 = function(city) {
+			d.value = city;
+		};
+		d.onclick = function() {
+			citypicker.show({
+				left : 300,
+				top : 350,
+				selected : fn2
+			});
+		};
+
+		function hide_this() {
+			if ($("#id_I_or_D").children('option:selected').val() == '0') {
+				$("#id_sort_by").val(0);
+				$("#id_sort_by").attr("hidden", true);
+				$("[for ='id_sort_by']").attr('hidden', true);
+			} else {
+				$("#id_sort_by").attr("hidden", false);
+				$("[for ='id_sort_by']").attr('hidden', false);
+			}
+		}
+
+		hide_this();
+		$("#id_I_or_D").change(function() {
+			hide_this();
+		});
+	}); 
+</script>
+{% endblock %}

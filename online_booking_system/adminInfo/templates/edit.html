@@ -1,0 +1,37 @@
+{% extends "sys_base.html" %}
+{% block title %}edit one {{what}}{% endblock %}
+
+{% block main_head %}
+
+<p>
+	edit one {{what}}
+</p>
+{% endblock %}
+
+{% block main_content %}
+
+<h1>edit {{what}}</h1>
+<div id="content-main">
+
+	<form enctype="multipart/form-data" action="" method="post" id="flight_form">{% csrf_token %}
+		<table>
+			{{ form.as_table }}
+		</table>
+
+		<div class="submit-row">
+			<input type="submit" value="save" class="btn" name="_save" />
+			<p class="deletelink-box">
+				<a href="/sys/{{what}}/{{pk_id}}/delete/" class="deletelink">删除</a>
+			</p>
+		</div>
+
+
+	</form>
+</div>
+
+
+
+{% endblock %}
+
+
+

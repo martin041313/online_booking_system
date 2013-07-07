@@ -1,0 +1,198 @@
+{% extends "dbase.html" %}
+{% block title %}ensure your flight booking{% endblock %}
+
+{% block content %}
+<div class="span2">
+	<div class="well sidebar-nav">
+		<ul class="nav nav-list">
+			<li class="nav-header">
+				Search
+			</li>
+			<li>
+				<a href="/booking/hotel/">search hotel</a>
+			</li>
+			<li>
+				<a href="/booking/flight/">search flight</a>
+			</li>
+			<li class="nav-header">
+				your records
+			</li>
+
+			<li>
+				<a href="/booking/my_record/hotel/">your hotel records</a>
+			</li>
+			<li>
+				<a href="/booking/my_record/flight/">your flight records</a>
+			</li>
+
+		</ul>
+	</div><!--/.well -->
+</div><!--/span-->
+
+<div class="span9">
+	<div class="row-fluid">
+
+		<p>
+			ensure your hotel room booking
+		</p>
+
+		
+		<div class="span3">
+			{{rr.hotel_id.name}}
+			<img src="/{{rr.hotel_id.img_url}}">
+		</div>
+		<div class="span3">
+			<dl class="dl-horizontal">
+
+				<dt>
+					city
+				</dt>
+				<dd>
+					{{rr.hotel_id.city_id}}
+				</dd>
+				<dt>
+					address
+				</dt>
+				<dd>
+					{{rr.hotel_id.address}}
+				</dd>
+
+				<dt>
+					phone number
+				</dt>
+				<dd>
+					{{rr.hotel_id.phone_number}}
+				</dd>
+				<dt>
+					room type
+				</dt>
+				<dd>
+					{%ifequal rr.hotel_id.room_type '1'%}
+					standard
+					{%else%}
+
+					big
+					{%endifequal%}
+				</dd>
+				<dt>
+					hotel star
+				</dt>
+				<dd>
+					{{rr.hotel_id.hotel_star}} stars
+				</dd>
+
+				<dt>
+					hot level
+				</dt>
+				<dd>
+					{{rr.hotel_id.hot_level}}
+				</dd>
+				<dt>
+					scores
+				</dt>
+				<dd>
+					{%ifequal  rr.hotel_id.scores -1 %}
+					no one comment
+					{%else%}
+					{{rr.hotel_id.scores}}
+					{%endifequal %}
+				</dd>
+				<dt>
+					price / (person day)
+				</dt>
+				<dd>
+					{{rr.hotel_id.price}}
+				</dd>
+
+			</dl>
+		</div>
+		<div class="span4">
+
+			<dl class="dl-horizontal">
+
+				<dt>
+					book date and time
+				</dt>
+				<dd>
+					{{rr.book_date}} and  {{rr.book_time}}
+				</dd>
+				<dt>
+					your score
+				</dt>
+				<dd>
+					{%ifequal  rr.scores -1 %}
+					<a href="/booking/my_record/hotel/{{rr.pk}}/" class="btn">comment now</a>
+					{%else%}
+					{{rr.scores}}
+					{%endifequal %}
+				</dd>
+				<dt>
+					your comment
+				</dt>
+				<dd>
+
+					{{rr.comment}}&nbsp;
+				</dd>
+
+				<dt>
+					checkin_date
+				</dt>
+				<dd>
+					{{rr.checkin_date}}
+				</dd>
+
+				<dt>
+					last date
+				</dt>
+				<dd>
+					{{rr.last}}
+				</dd>
+
+				<dt>
+					book number
+				</dt>
+				<dd>
+					{{rr.num}}
+				</dd>
+
+				<dt>
+					total price
+				</dt>
+				<dd>
+					{{rr.price}}
+				</dd>
+				<dt>
+					your account balance
+				</dt>
+				<dd>
+					{{b}}
+				</dd>
+
+			</dl>
+
+		</div>
+	</div>
+	<div class="row-fluid " >
+
+		<form class="form-horizontal" action="" method="post">
+			{% csrf_token %}
+			<input type="hidden" name="post" value="yes" />
+
+			<fieldset>
+				<div id="legend" class="">
+					<legend class="">
+						pay for your booking for ￥ {{rr.price}}
+					</legend>
+				</div>
+
+				<button type="submit" class="btn">
+					I am sure, pay for it!
+				</button>
+
+			</fieldset>
+		</form>
+	</div><!--/row-->
+
+</div>
+{% endblock %}
+

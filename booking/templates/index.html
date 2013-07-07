@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "dbase.html" %}
 {% block title %}
 online booking system
 {% endblock %}
@@ -19,25 +19,17 @@ online booking system
 			<li class="nav-header">
 				your records
 			</li>
-			<li>
-				<a href="/booking/my_record/flight/">your flight records</a>
-			</li>
+			
 			<li>
 				<a href="/booking/my_record/hotel/">your hotel records</a>
 			</li>
-			<li class="nav-header">
-				admin options
-			</li>
 			<li>
-				<a href="/sys/city/">manage cities</a>
-			</li>
-			<li>
-				<a href="/sys/company/">manage comanys</a>
+				<a href="/booking/my_record/flight/">your flight records</a>
 			</li>
 		</ul>
 	</div><!--/.well -->
 </div><!--/span-->
-<div class="span10">
+<div class="span9">
 
 	<div class="hero-unit">
 
@@ -46,157 +38,8 @@ online booking system
 		</p>
 	</div>
 	<div class="row-fluid">
-		<div class="well row-fluid">
-			<h1>hotel discount infomation</h1>
-			<table class="table table-bordered">
-				<thead>
-					<tr>
+		
 
-						<th>#</th>
-						<th>name</th>
-						<th>hotel star</th>
-						<th>img</th>
-						<th>address</th>
-						<th>phone_number</th>
-						<th>city</th>
-						<th>price</th>
-						<th>room_type</th>
-						<th>hot_level</th>
-						<th>scores</th>
-						<th>discount</th>
-
-					</tr>
-				</thead>
-				<tbody>
-
-					{% for rr in hls%}
-
-					<tr>
-
-						<td>{{rr.id}}</td>
-							<td>{{rr.hotel_id.name}}</td>
-							<td>{{rr.hotel_id.hotel_star}} stars</td>
-							<td><img src="/{{rr.hotel_id.img_url}}"></td>
-							<td>{{rr.hotel_id.address}}</td>
-							<td>{{rr.hotel_id.phone_number}}</td>
-							<td>{{rr.hotel_id.city_id}}</td>
-							<td>{{rr.hotel_id.price}}</td>
-							<td> {%ifequal rr.hotel_id.room_type 1%}
-								standard
-								{%else%}
-								
-									big
-								{%endifequal%}
-								</td>
-							
-							<td>{{rr.hotel_id.hot_level}}</td>
-							<td>{%ifequal  rr.hotel_id.scores -1 %}
-								no one comment
-								{%else%}
-								{{rr.hotel_id.scores}}
-								{%endifequal %}
-								</td>
-								<td>{{rr.discount}}</td>
-
-					</tr>
-
-					{% endfor %}
-
-				</tbody>
-			</table>
-			<div class="pagination">
-
-				<ul>
-					{% if hls.has_previous %}
-					<li>
-						<a href="?p1={{ hls.previous_page_number }}">previous</a>
-					</li>
-					{% endif %}
-					<li class="active">
-						<a>Page {{ hls.number }} of {{ hls.paginator.num_pages }}.</a>
-					</li>
-					{% if hls.has_next %}
-					<li>
-						<a href="?p1={{ hls.next_page_number }}">next</a>
-					</li>
-					{% endif %}
-				</ul>
-			</div>
-		</div>
-		<div class="well row-fluid">
-			<h1>flight discount infomation</h1>
-
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-
-						<th>#</th>
-						<th>start city</th>
-						<th>destination city</th>
-						<th>take off date</th>
-						<th>take off time</th>
-						<th>arrive date</th>
-						<th>arrive time</th>
-						<th>comany</th>
-						<th>nonestop</th>
-						<th>plane class</th>
-						<th>price</th>
-						<th>discount</th>
-					</tr>
-				</thead>
-				<tbody>
-
-					{% for rr in fls%}
-
-					<tr>
-						<td>{{rr.id}}</td>
-							<td>{{rr.flight_id.starting_id}}</td>
-							<td>{{rr.flight_id.destination_id}}</td>
-							<td>{{rr.flight_id.leave_date}}</td>
-							<td>{{rr.flight_id.leave_time}}</td>
-							<td>{{rr.flight_id.arrive_date}}</td>
-							<td>{{rr.flight_id.arrive_time}}</td>
-							<td>{{rr.flight_id.company_id}}</td>
-							<td>{{rr.flight_id.none_stop}}</td>
-							<td> {%ifequal rr.flight_id.plane_type 1%}
-								economy
-								{%else%}
-								
-									{%ifequal rr.flight_id.plane_type 2%}
-									business
-									{%else%}
-									first class
-									{%endifequal%}
-								{%endifequal%}
-								</td>
-							<td>{{rr.flight_id.price}}</td>
-							<td>{{rr.discount}}</td>
-							
-
-					</tr>
-
-					{% endfor %}
-
-				</tbody>
-			</table>
-			<div class="pagination">
-				<ul>
-					{% if fls.has_previous %}
-					<li>
-						<a href="?p2={{ fls.previous_page_number }}">previous</a>
-					</li>
-					{% endif %}
-					<li class="active">
-						<a>Page {{ fls.number }} of {{ fls.paginator.num_pages }}.</a>
-					</li>
-					{% if fls.has_next %}
-					<li>
-						<a href="?p2={{ fls.next_page_number }}">next</a>
-					</li>
-					{% endif %}
-				</ul>
-			</div>
-		</div>
 	</div>
 </div>
 {% endblock %}

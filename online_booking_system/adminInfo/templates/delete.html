@@ -1,0 +1,30 @@
+{% extends "sys_base.html" %}
+{% block title %}delete one {{what}}{% endblock %}
+
+{% block main_head %}
+
+<p>
+	delete one {{what}}
+</p>
+{% endblock %}
+{% block main_content %}
+<h1>Are you sure?</h1>
+
+<p>
+	Are you sure to delete {{what}} "{{r}}"?
+</p>
+<ul>
+	<li>
+		{{what}}: <a href="/sys/{{what}}/{{r.pk}}/">{{r}}</a>
+	</li>
+</ul>
+<form action="" method="post">
+	{% csrf_token %}
+	<div>
+		<input type="hidden" name="post" value="yes" />
+		<input type="submit" class="btn" value="yes, I am sure" />
+	</div>
+</form>
+
+
+{% endblock %}

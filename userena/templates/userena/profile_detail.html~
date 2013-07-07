@@ -1,0 +1,76 @@
+{% extends 'userena/profile_base.html' %}
+{% load i18n %}
+{% load url from future %}
+{% block title %}{% blocktrans with profile.user.username as username %}{{ username }}'s profile.{% endblocktrans %}{% endblock %}
+{% block username %} {{ profile.user.username }} {% endblock %}
+{% block content_right %}
+    <div id="details" class="hero-unit">
+      {% block profile_details %}
+      
+        <div class="row">
+            <div class="span3">
+        <img class="mugshot" src="{{ profile.get_mugshot_url }}" alt="{% trans "Your mugshot" %}" />
+        <dl>
+          {% block profile_definition_list %}
+            {% if profile.user.get_full_name %}
+              <dt>{% trans "Name" %}</dt>
+              <dd>{{ profile.user.get_full_name }}</dd>
+            {% endif %}
+
+            {% if profile.user.email and not hide_email %}
+              <dt>{% trans "Email" %}</dt>
+              <dd>{{ profile.user.email }}</dd>
+            {% endif %}
+            
+            {% if profile.age %}
+              <dt>{% trans "Age" %}</dt>
+              <dd>{{ profile.age }}</dd>
+            {% endif %}
+
+            {% if profile.website %}
+              <dt>{% trans "Website" %}</dt>
+              <dd>{{ profile.website|urlize }}</dd>
+            {% endif %}
+
+            {% if profile.location %}
+              <dt>{% trans "Location" %}</dt>
+              <dd>{{ profile.location }}</dd>
+            {% endif %}
+
+            {% if profile.about_me %}
+              <dt>{% trans "About me" %}</dt>
+              <dd>{{ profile.about_me }}</dd>
+            {% endif %}
+
+            {% if userAccount %}
+              <dt>{% trans "Account Balance" %}</dt>
+              <dd>￥{{ userAccount.balance }}</dd>
+            {% endif %}
+          {% endblock %}
+          </div>
+          <div class="span8">
+            {% if payDetail %}
+                <dt>{% trans "Recent Payment Details" %}</dt>
+                <table class="table table-hover">
+                    <tr>
+                        <th>Time</th>
+                        <th>Brief</th>
+                        <th>Pay Amount</th>
+                        <th>Balance</th>
+                    </tr>
+                {% for item in payDetail %}
+                <tr>
+                    <td>{{ item.time}}</td><td>{{ item.brief}}</td><td>￥{% if item.amount > 0 %}+{%endif%}{{ item.amount}}</td><td>￥{{ item.balance }}</td>
+                </tr>
+                {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+    </div>
+        </dl>
+      {% endblock %}
+
+
+    </div>
+<script type="text/javascript"> document.getElementById("li1").className="active"; </script>
+{% endblock %}

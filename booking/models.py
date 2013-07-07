@@ -19,7 +19,7 @@ class city(models.Model):#这是城市的表 可以添加更多数据 加强功�
     @note this is the city object.
     '''
     pinyin = models.CharField(max_length=5, unique=True)
-    name = models.CharField(max_length=256, unique=True)
+    name = models.CharField(max_length=255, unique=True)
     
     def __unicode__(self):
         '''
@@ -30,7 +30,7 @@ class company(models.Model):
     '''
     @note this is the company object.
     '''
-    name = models.CharField(max_length=256, unique=True)
+    name = models.CharField(max_length=255, unique=True)
     def __unicode__(self):
         '''
         @return: returns how the object will be printed
@@ -45,27 +45,27 @@ class flight(models.Model):
     '''
     @note this is the flight infomation object.
     '''
-    starting_id  = models.ForeignKey(city,related_name='+',verbose_name ="出发地点");#models.CharField(max_length=4, choices=CITY_CHOICE,verbose_name ="出发城市")
-    destination_id = models.ForeignKey(city,related_name='+',verbose_name ="目的地"); #models.CharField(max_length=4, choices=CITY_CHOICE,verbose_name ="到达城市")
-    company_id = models.ForeignKey(company,related_name='+',verbose_name ="航空公司")
+    starting_id  = models.ForeignKey(city,related_name='+',verbose_name ="start city");#models.CharField(max_length=4, choices=CITY_CHOICE,verbose_name ="出发城市")
+    destination_id = models.ForeignKey(city,related_name='+',verbose_name ="destination city"); #models.CharField(max_length=4, choices=CITY_CHOICE,verbose_name ="到达城市")
+    company_id = models.ForeignKey(company,related_name='+',verbose_name ="company")
     
-    none_stop = models.BooleanField(verbose_name ="直飞")
+    none_stop = models.BooleanField(verbose_name ="nonstop")
 
-    plane_type = models.CharField(max_length=1, choices=FLIGHT_CHOICES,verbose_name ="舱位等级")
+    plane_type = models.CharField(max_length=1, choices=FLIGHT_CHOICES,verbose_name ="class")
     
-    price = models.FloatField(verbose_name ="价格")
-    leave_date = models.DateField(verbose_name ="出发日期")
-    leave_time = models.TimeField(verbose_name ="出发时间")
-    arrive_date = models.DateField(verbose_name ="到达日期")
-    arrive_time = models.TimeField(verbose_name ="到达时间")
-    leave_number = models.IntegerField(verbose_name ="剩余票数")
+    price = models.FloatField(verbose_name ="price")
+    leave_date = models.DateField(verbose_name ="take off data")
+    leave_time = models.TimeField(verbose_name ="take off time")
+    arrive_date = models.DateField(verbose_name ="arrive_date")
+    arrive_time = models.TimeField(verbose_name ="arrive_time")
+    leave_number = models.IntegerField(verbose_name ="leave_number")
     def __unicode__(self):
         '''
         @return: returns how the object will be printed
         '''
         f_type = FLIGHT_CHOICES[int(self.plane_type)-1][1]
-        return u'{} {}->{} {} {} {}->{} {} {}:￥{} {}个座位'\
-            .format(self.company_id, self.starting_id,self.destination_id,u'直飞' if self.none_stop else u'中转',self.leave_date,\
+        return u'{} {}->{} {} {} {}->{} {} {}: cost {} {}seats'\
+            .format(self.company_id, self.starting_id,self.destination_id,u'nonstop' if self.none_stop else u'stop',self.leave_date,\
             self.leave_time,self.arrive_date,self.arrive_time,f_type,self.price,self.leave_number)
 
 
@@ -84,11 +84,11 @@ class hotel(models.Model):
     '''
     @note this is the hotel infomation object.
     '''
-    name = models.CharField(max_length=256)
+    name = models.CharField(max_length=255)
 
     hotel_star = models.CharField(max_length=1, choices=STAR_CHOICES)
-    img_url = models.CharField(max_length=256)
-    address = models.CharField(max_length=256)
+    img_url = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=16)
     city_id = models.ForeignKey(city,related_name='+')
     
@@ -104,7 +104,7 @@ class hotel(models.Model):
         '''
         r_type = ROOM_CHOICES[int(self.room_type)-1][1]
         h_type = STAR_CHOICES[int(self.hotel_star)-2][1]
-        return u'{} {} {} {} {}: ￥{} 热度:{} 评分:{}' \
+        return u'{} {} {} {} {}: cost {} hot level:{} score:{}' \
             .format(self.city_id, self.name,h_type,self.phone_number,r_type,self.price,self.hot_level,'not comented yet!' if self.scores==-1 else str(self.scores))
 
 class room_num(models.Model):
@@ -118,7 +118,7 @@ class room_num(models.Model):
         '''
         @return: returns how the object will be printed
         '''
-        return u'{} {} 剩余{}个房间' .format(self.hotel_id,self.date,self.room_number)
+        return u'{} {} left {} rooms' .format(self.hotel_id,self.date,self.room_number)
 class flight_discount(models.Model):
     '''
     @note this is the flight discount infomation object.
@@ -154,6 +154,10 @@ class hotel_record(models.Model):
     num = models.IntegerField()
     book_date = models.DateField()
     book_time = models.TimeField()
+    price = models.IntegerField()
+    #"0" unpayed
+    #"1" payed
+    stat = models.CharField(max_length=1)
     def __unicode__(self):
         '''
         @return: returns how the object will be printed
@@ -171,6 +175,10 @@ class flight_record(models.Model):
     num = models.IntegerField()
     book_date = models.DateField()
     book_time = models.TimeField()
+    price = models.IntegerField()
+    #"0" unpayed
+    #"1" payed
+    stat = models.CharField(max_length=1)
     def __unicode__(self):
         '''
         @return: returns how the object will be printed

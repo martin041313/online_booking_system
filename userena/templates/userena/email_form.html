@@ -1,0 +1,28 @@
+{% extends 'userena/profile_base.html' %}
+{% load i18n %}
+{% load url from future %}
+
+
+{% block username %} {{ profile.user.username }} {% endblock %}
+
+
+
+{% block content_right %}
+<div id="details" class="hero-unit">
+<form action="" method="post" style="width:300px">
+  
+  {% csrf_token %}
+  <fieldset>
+    <legend>{% trans "Change email address" %}</legend>
+    {{ form.as_p }}
+  </fieldset>
+  <div class="alert alert-block">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4>Warning!</h4>
+    Best check the Email address <strong>Again.</strong>
+  </div>    
+  <input type="submit" class="btn btn-warning" value="{% trans "Change Email" %}" />
+</form>
+</div>	
+<script type="text/javascript"> document.getElementById("li4").className="active"; </script>
+{% endblock %}

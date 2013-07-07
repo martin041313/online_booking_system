@@ -1,0 +1,265 @@
+{% extends "base.html" %}
+{% block title %}
+online booking system
+{% endblock %}
+{% block css %}
+<link type="text/css" rel="stylesheet" href="/static/css/demos.css"/>
+<link type="text/css" rel="stylesheet" href="/static/css/themes/base/jquery.ui.all.css"/>
+<link type="text/css" rel="stylesheet" href="/static/css/jock-citypicker-2.0.css" />
+{% endblock %}
+{% block content %}
+<div class="span2">
+	<div class="well sidebar-nav">
+		<ul class="nav nav-list">
+			<li class="nav-header">
+				Search
+			</li>
+			<li>
+				<a href="/booking/hotel/">search hotel</a>
+			</li>
+			<li>
+				<a href="/booking/flight/">search flight</a>
+			</li>
+			<li class="nav-header">
+				your records
+			</li>
+			<li>
+				<a href="/booking/my_record/flight/">your flight records</a>
+			</li>
+			<li>
+				<a href="/booking/my_record/hotel/">your hotel records</a>
+			</li>
+			<li class="nav-header">
+				admin options
+			</li>
+			<li>
+				<a href="/sys/city/">manage cities</a>
+			</li>
+			<li>
+				<a href="/sys/company/">manage comanys</a>
+			</li>
+		</ul>
+	</div><!--/.well -->
+</div><!--/span-->
+<div class="span9">
+
+	<div class="row-fluid">
+		<div class="well row-fluid">
+			<form action="" method="post" >
+				{% csrf_token %}
+				<div class="span3">
+					<label for="id_city">city:</label>
+					<input id="id_city" name="city" type="text" value="北京" />
+
+					<label for="id_start">check in date:</label>
+					<input id="id_start" name="start" type="text" value="2013-06-01" />
+
+					<label for="id_last">days to live in:</label>
+					<input id="id_last" name="last" type="text" value="1" />
+				</div>
+				<div class="span3">
+					<label for="id_star">star level:</label>
+					<select id="id_star" name="star">
+						<option value="0" selected="selected">unlimit</option>
+						<option value="2">&lt;=2 stars</option>
+						<option value="3">3 stars</option>
+						<option value="4">4 stars</option>
+						<option value="5">5 stars</option>
+					</select>
+
+					<label for="id_room_type">room type:</label>
+					<select id="id_room_type" name="room_type">
+						<option value="0" selected="selected">unlimit</option>
+						<option value="1">standard</option>
+						<option value="2">big</option>
+					</select>
+
+					<label for="id_keyword">keyword:</label>
+					<input id="id_keyword" name="keyword" type="text" />
+				</div>
+				<div class="span3">
+					<label for="id_I_or_D">how to sort:</label>
+					<select id="id_I_or_D" name="I_or_D">
+						<option value="0" selected="selected">unsort</option>
+						<option value="1">increase</option>
+						<option value="2">decrease</option>
+					</select>
+
+					<label for="id_sort_by">sort by:</label>
+					<select id="id_sort_by" name="sort_by">
+						<option value="0" selected="selected">unsort</option>
+						<option value="price">price</option>
+						<option value="hotel_star">hotel star</option>
+						<option value="scores">scores</option>
+						<option value="hot_level">hot level</option>
+					</select>
+					<label>&nbsp;</label>
+					<input type="submit" class="btn" value="Submit">
+				</div>
+			</form>
+
+		</div>
+		<div class="well row-fluid">
+			<h1>query result</h1>
+			
+			
+			{% for rr in rs%}
+			<div class="well">
+				<div class=" row-fluid">
+					<div class="span4">
+						<img src="/{{rr.img_url}}">
+					</div>
+					<div class="span4">
+						<dl class="dl-horizontal">
+							<dt>
+								name
+							</dt>
+							<dd>
+								{{rr.name}}
+							</dd>
+
+							<dt>
+								city
+							</dt>
+							<dd>
+								{{rr.city_id}}
+							</dd>
+							<dt>
+								address
+							</dt>
+							<dd>
+								{{rr.address}}
+							</dd>
+
+							<dt>
+								phone number
+							</dt>
+							<dd>
+								{{rr.phone_number}}
+							</dd>
+							<dt>
+								room type
+							</dt>
+							<dd>
+								{%ifequal rr.room_type 1%}
+								standard
+								{%else%}
+
+								big
+								{%endifequal%}
+							</dd>
+						</dl>
+					</div>
+					<div class="span4">
+
+						<dl class="dl-horizontal">
+							<dt>
+								hotel star
+							</dt>
+							<dd>
+								{{rr.hotel_star}} stars
+							</dd>
+
+							<dt>
+								hot level
+							</dt>
+							<dd>
+								{{rr.hot_level}}
+							</dd>
+							<dt>
+								scores
+							</dt>
+							<dd>
+								{%ifequal  rr.scores -1 %}
+								no one comment
+								{%else%}
+								{{rr.scores}}
+								{%endifequal %}
+							</dd>
+
+							
+							<dt>
+								price
+							</dt>
+							<dd>
+								{{rr.price}}
+							</dd>
+						</dl>
+						
+					</div>
+					<a class="btn" href="/booking/hotel/{{rr.id}}/">Go to Book this</a>
+				</div>
+
+			</div>
+			{% endfor %}
+			
+
+			<div class="pagination">
+				<ul>
+					{% if rs.has_previous %}
+					<li>
+						<a href="?p={{ rs.previous_page_number }}">previous</a>
+					</li>
+					{% endif %}
+					<li class="active">
+						<a>Page {{ rs.number }} of {{ rs.paginator.num_pages }}.</a>
+					</li>
+					{% if rs.has_next %}
+					<li>
+						<a href="?p={{ rs.next_page_number }}">next</a>
+					</li>
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block js %}
+
+<script type="text/javascript" src="/static/js/jquery.ui.core.js"></script>
+<script type="text/javascript" src="/static/js/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="/static/js/jquery.ui.datepicker.js"></script>
+<script type="text/javascript" src="/static/js/jquery.ui.position.js"></script>
+<script type="text/javascript" src="/static/js/jquery.ui.tooltip.js"></script>
+<script type="text/javascript" src="/static/js/jock-citypicker-2.0.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+
+		$("#id_start").datepicker({
+			dateFormat : 'yy-mm-dd'
+		});
+
+		//$("#id_end").datepicker({dateFormat: 'yy-mm-dd'});
+
+		var c = document.getElementById("id_city");
+
+		var fn2 = function(city) {
+			c.value = city;
+		};
+		c.onclick = function() {
+			citypicker.show({
+				left : 300,
+				top : 300,
+				selected : fn2
+			});
+		};
+		function hide_this() {
+			if ($("#id_I_or_D").children('option:selected').val() == '0') {
+				$("#id_sort_by").val(0);
+				$("#id_sort_by").attr("hidden", true);
+				$("[for ='id_sort_by']").attr('hidden', true);
+			} else {
+				$("#id_sort_by").attr("hidden", false);
+				$("[for ='id_sort_by']").attr('hidden', false);
+			}
+		}
+
+		hide_this();
+		$("#id_I_or_D").change(function() {
+			hide_this();
+		});
+	}); 
+</script>
+{% endblock %}

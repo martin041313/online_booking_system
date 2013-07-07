@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+
+{% block content %}
+<div class="span3">
+	<div class="well sidebar-nav">
+		<ul class="nav nav-list">
+			<li class="nav-header">
+				company
+			</li>
+			<li>
+				<a href="/sys/company/add">add company</a>
+			</li>
+			<li>
+				<a href="/sys/company/load">load company</a>
+			</li>
+			<li>
+				<a href="/sys/company/">show company</a>
+			</li>
+			<li class="nav-header">
+				city
+			</li>
+			<li>
+				<a href="/sys/city/add">add city</a>
+			</li>
+			<li>
+				<a href="/sys/city/load">load city</a>
+			</li>
+			<li>
+				<a href="/sys/city/">show city</a>
+			</li>
+			<li class="nav-header">
+				User
+			</li>
+			<li>
+				<a href="/sys/User/add">add User</a>
+			</li>
+			<li>
+				<a href="/sys/User/load">load User</a>
+			</li>
+			<li>
+				<a href="/sys/User/">show User</a>
+			</li>
+			<li class="nav-header">
+				flight
+			</li>
+			<li>
+				<a href="/sys/flight/add">add flight</a>
+			</li>
+			<li>
+				<a href="/sys/flight/load">load flight</a>
+			</li>
+			<li>
+				<a href="/sys/flight/">show flight</a>
+			</li>
+			<li class="nav-header">
+				hotel
+			</li>
+			<li>
+				<a href="/sys/hotel/add">add hotel</a>
+			</li>
+			<li>
+				<a href="/sys/hotel/load">load hotel</a>
+			</li>
+			<li>
+				<a href="/sys/hotel/">show hotel</a>
+			</li>
+			<li class="nav-header">
+				room_num
+			</li>
+			<li>
+				<a href="/sys/room_num/add">add room_num</a>
+			</li>
+			<li>
+				<a href="/sys/room_num/load">load room_num</a>
+			</li>
+			<li>
+				<a href="/sys/room_num/">show room_num</a>
+			</li>
+			<li class="nav-header">
+				hotel_record
+			</li>
+			<li>
+				<a href="/sys/hotel_record/add">add hotel_record</a>
+			</li>
+			<li>
+				<a href="/sys/hotel_record/load">load hotel_record</a>
+			</li>
+			<li>
+				<a href="/sys/hotel_record/">show hotel_record</a>
+			</li>
+			<li class="nav-header">
+				flight_record
+			</li>
+			<li>
+				<a href="/sys/flight_record/add">add flight_record</a>
+			</li>
+			<li>
+				<a href="/sys/flight_record/load">load flight_record</a>
+			</li>
+			<li>
+				<a href="/sys/flight_record/">show flight_record</a>
+			</li>
+			<li class="nav-header">
+				room_discount
+			</li>
+			<li>
+				<a href="/sys/room_discount/add">add room_discount</a>
+			</li>
+			<li>
+				<a href="/sys/room_discount/load">load room_discount</a>
+			</li>
+			<li>
+				<a href="/sys/room_discount/">show room_discount</a>
+			</li>
+			<li class="nav-header">
+				flight_discount
+			</li>
+			<li>
+				<a href="/sys/flight_record/add">add flight_discount</a>
+			</li>
+			<li>
+				<a href="/sys/flight_discount/load">load flight_discount</a>
+			</li>
+			<li>
+				<a href="/sys/flight_discount/">show flight_discount</a>
+			</li>
+		</ul>
+	</div><!--/.well -->
+</div><!--/span-->
+<div class="span9">
+	<div class="hero-unit">
+		{% block main_head %}
+		{% endblock %}
+
+	</div>
+
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="bs-docs-example well">
+				{% block main_content %}
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

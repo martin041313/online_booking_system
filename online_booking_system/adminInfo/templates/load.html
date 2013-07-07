@@ -1,0 +1,30 @@
+{% extends "sys_base.html" %}
+{% block title %}load {{what}}{% endblock %}
+
+{% block main_head %}
+
+<p>
+	load {{what}}
+</p>
+{% endblock %}
+
+{% block main_content %}
+
+<h1>load {{what}}</h1>
+<div id="content-main">
+
+	<form enctype="multipart/form-data" action="" method="post" id="r_form">
+		{% csrf_token %}
+		<table>
+			{{ form.as_table }}
+			<th></th><td><input type="submit" value="upload" class="btn" name="save" /></td>
+		</table>
+		
+	</form>
+</div>
+
+<br class="clear" />
+
+{% endblock %}
+
+

@@ -1,0 +1,23 @@
+{% extends 'userena/profile_base.html' %}
+{% load i18n %}
+{% load url from future %}
+
+{% block title %}{% trans "Account setup" %}{% endblock %}
+
+{% block username %} {{ profile.user.username }} {% endblock %}
+
+{% block content_right %}
+<div id="details" class="hero-unit">
+
+	<form action="" enctype="multipart/form-data" method="post">
+	  
+	  {% csrf_token %}
+	  <fieldset>
+	    <legend>{% trans "Edit Profile" %}</legend>
+	    {{ form.as_p }}
+	  </fieldset>
+	  <input type="submit" class="btn btn-warning" value="{% trans "Save changes" %}" />
+	</form>
+</div>	
+
+{% endblock %}

@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    {% load staticfiles %}
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css"/>
+        <script src="/static/js/jquery-1.7.2.min.js"></script>
+        <script src="/static/js/bootstrap.js"></script>
+        <style type="text/css">
+            .table th, .table td {
+                text-align: center;
+                vertical-align: middle;
+            }
+        </style>
+        {% block headjs %}
+        {% endblock %}
+    </head>
+
+    <body>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="/">Online Payment System</a>
+                <ul class="nav">
+					<li><a href="/booking/">Booking</a></li>
+                    <li><a href="/items/">Items</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="/order/">Orders</a></li>
+                    <li><a href="/accounts/{{user.username}}">Account</a></li>
+                    <li><a href="/accounts/signout">Sign Out</a>
+                    {% else %}
+                    <li><a href="/accounts/signin">Sign In</a></li>
+                    <li><a href="/accounts/signup">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            {% block content %}
+            {% endblock content %}
+        </div>
+        {% block footer %}
+        {% endblock footer%}
+        {% block js %}
+        {% endblock js %}
+    </body>
+</html>

@@ -1,11 +1,10 @@
-{% extends "base.html" %}
+{% extends "dbase.html" %}
 {% block title %}
 online booking system
 {% endblock %}
 {% block css %}
 <link type="text/css" rel="stylesheet" href="/static/css/demos.css"/>
 <link type="text/css" rel="stylesheet" href="/static/css/themes/base/jquery.ui.all.css"/>
-<link type="text/css" rel="stylesheet" href="/static/css/jock-citypicker-2.0.css" />
 {% endblock %}
 {% block content %}
 <div class="span2">
@@ -17,119 +16,238 @@ online booking system
 			<li>
 				<a href="/booking/hotel/">search hotel</a>
 			</li>
-			<li>
+			<li class="active">
 				<a href="/booking/flight/">search flight</a>
 			</li>
 			<li class="nav-header">
 				your records
 			</li>
-			<li>
-				<a href="/booking/my_record/flight/">your flight records</a>
-			</li>
+
 			<li>
 				<a href="/booking/my_record/hotel/">your hotel records</a>
 			</li>
-			<li class="nav-header">
-				admin options
-			</li>
 			<li>
-				<a href="/sys/city/">manage cities</a>
-			</li>
-			<li>
-				<a href="/sys/company/">manage comanys</a>
+				<a href="/booking/my_record/flight/">your flight records</a>
 			</li>
 		</ul>
 	</div><!--/.well -->
 </div><!--/span-->
 <div class="span10">
 
-	<div class="hero-unit">
-
-		<p>
-			welcome to SE online booking system
-		</p>
-	</div>
-	<div class="row-fluid">
-		<div class="well row-fluid">
-			<form action="" method="post" class="table table-bordered">
+	<div class=" row-fluid">
+		<div class="well span4">
+			<form action="" method="post" >
 				{% csrf_token %}
 				<table>
-					{{form.as_table}}
-					<tr><td></td><td><input type="submit" class="btn" value="Submit"></td></tr>
-
+					{{ form.as_table}}
+					<tr>
+						<th><label >&nbsp;</label></th><td>
+						<input type="submit" class="btn" value="Submit">
+						</td>
+					</tr>
 				</table>
-
 			</form>
 		</div>
-		<div class="well row-fluid">
-			<h1>query result</h1>
-			<table class="table-bordered table table-striped">
-				<thead>
-					<tr class="row">
-						<th>#</th>
-						<th>start city</th>
-						<th>destination city</th>
-						<th>take off date</th>
-						<th>take off time</th>
-						<th>arrive date</th>
-						<th>arrive time</th>
-						<th>comany</th>
-						<th>nonestop</th>
-						<th>plane class</th>
-						<th>price</th>
-						<th>opration</th>
-					</tr>
-				</thead>
-				<tbody>
-					{%for s in rs%}
+		<div class="well span8">
+			<p>
+				flight discount infomation
+			</p>
 
-					<tr class="row">
-						<td>{{s.id}}</td>
-						<td>{{s.starting_id}}</td>
-						<td>{{s.destination_id}}</td>
-						<td>{{s.leave_date}}</td>
-						<td>{{s.leave_time}}</td>
-						<td>{{s.arrive_date}}</td>
-						<td>{{s.arrive_time}}</td>
-						<td>{{s.company_id}}</td>
-						<td>{{s.none_stop}}</td>
-						<td> {%ifequal s.plane_type '1'%}
-						economy
-						{%else%}
+			{% for rr in fls%}
+			<div class=" row-fluid ">
 
-						{%ifequal s.plane_type '2'%}
-						business
-						{%else%}
-						first class
-						{%endifequal%}
-						{%endifequal%} </td>
-						<td>{{s.price}}</td>
-						<td><a href="/booking/flight/{{s.pk}}/" class="btn"> book</a></td>
-					</tr>
+				<div class="span3">
+					<dl >
+						<dt>
+							start city
+						</dt>
+						<dd>
+							{{rr.flight_id.starting_id}}
+						</dd>
 
-					{% endfor %}
-				</tbody>
+						<dt>
+							destination city
+						</dt>
+						<dd>
+							{{rr.flight_id.destination_id}}
+						</dd>
+						<dt>
+							take off date
+						</dt>
+						<dd>
+							{{rr.flight_id.leave_date}}
+						</dd>
 
-			</table>
+						<dt>
+							take off time
+						</dt>
+						<dd>
+							{{rr.flight_id.leave_time}}
+						</dd>
+						<dt>
+							arrive date
+						</dt>
+						<dd>
+							{{rr.flight_id.arrive_date}}
+						</dd>
+						<dt>
+							arrive time
+						</dt>
+						<dd>
+							{{rr.flight_id.arrive_time}}
+						</dd>
+
+					</dl>
+				</div>
+				<div class="span3">
+
+					<dl >
+						<dt>
+							comany
+						</dt>
+						<dd>
+							{{rr.flight_id.company_id}}
+						</dd>
+
+						<dt>
+							nonestop
+						</dt>
+						<dd>
+							{{rr.flight_id.none_stop}}
+						</dd>
+						<dt>
+							plane class
+						</dt>
+						<dd>
+							{%ifequal rr.flight_id.plane_type '1'%}
+							economy
+							{%else%}
+
+							{%ifequal rr.flight_id.plane_type '2'%}
+							business
+							{%else%}
+							first class
+							{%endifequal%}
+							{%endifequal%}
+						</dd>
+
+						<dt>
+							price
+						</dt>
+						<dd>
+							{{rr.flight_id.price}}
+						</dd>
+						<dt>
+							discount
+						</dt>
+						<dd>
+							{{rr.discount}}
+						</dd>
+						<dt>
+							opration
+						</dt>
+						<dd>
+							<a href="/booking/flight/{{rr.flight_id.id}}/" class="btn"> book</a>
+						</dd>
+					</dl>
+
+				</div>
+			</div>
+
+			{% endfor %}
 
 			<div class="pagination">
 				<ul>
-					{% if rs.has_previous %}
+					{% if fls.has_previous %}
 					<li>
-						<a href="?p={{ rs.previous_page_number }}">previous</a>
+						<a href="?p2={{ fls.previous_page_number }}">previous</a>
 					</li>
 					{% endif %}
 					<li class="active">
-						<a>Page {{ rs.number }} of {{ rs.paginator.num_pages }}.</a>
+						<a>Page {{ fls.number }} of {{ fls.paginator.num_pages }}.</a>
 					</li>
-					{% if rs.has_next %}
+					{% if fls.has_next %}
 					<li>
-						<a href="?p={{ rs.next_page_number }}">next</a>
+						<a href="?p2={{ fls.next_page_number }}">next</a>
 					</li>
 					{% endif %}
 				</ul>
 			</div>
 		</div>
+	</div>
+	<div class="row-fluid">
+		<h1>query result</h1>
+		{%if not rs %}
+		Nothing match query.
+		{%else%}
+		<table class="table-bordered table table-striped">
+			<thead>
+				<tr class="row">
+					<th>#</th>
+					<th>start city</th>
+					<th>destination city</th>
+					<th>take off date</th>
+					<th>take off time</th>
+					<th>arrive date</th>
+					<th>arrive time</th>
+					<th>comany</th>
+					<th>nonestop</th>
+					<th>plane class</th>
+					<th>price</th>
+					<th>opration</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				{%for s in rs%}
+
+				<tr class="row">
+					<td>{{s.id}}</td>
+					<td>{{s.starting_id}}</td>
+					<td>{{s.destination_id}}</td>
+					<td>{{s.leave_date}}</td>
+					<td>{{s.leave_time}}</td>
+					<td>{{s.arrive_date}}</td>
+					<td>{{s.arrive_time}}</td>
+					<td>{{s.company_id}}</td>
+					<td>{{s.none_stop}}</td>
+					<td> {%ifequal s.plane_type '1'%}
+					economy
+					{%else%}
+
+					{%ifequal s.plane_type '2'%}
+					business
+					{%else%}
+					first class
+					{%endifequal%}
+					{%endifequal%} </td>
+					<td>{{s.price}}</td>
+					<td><a href="/booking/flight/{{s.pk}}/" class="btn"> book</a></td>
+				</tr>
+
+				{% endfor %}
+			</tbody>
+
+		</table>
+
+		<div class="pagination">
+			<ul>
+				{% if rs.has_previous %}
+				<li>
+					<a href="?p={{ rs.previous_page_number }}">previous</a>
+				</li>
+				{% endif %}
+				<li class="active">
+					<a>Page {{ rs.number }} of {{ rs.paginator.num_pages }}.</a>
+				</li>
+				{% if rs.has_next %}
+				<li>
+					<a href="?p={{ rs.next_page_number }}">next</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+		{%endif%}
 	</div>
 </div>
 {% endblock %}
@@ -140,7 +258,6 @@ online booking system
 <script type="text/javascript" src="/static/js/jquery.ui.datepicker.js"></script>
 <script type="text/javascript" src="/static/js/jquery.ui.position.js"></script>
 <script type="text/javascript" src="/static/js/jquery.ui.tooltip.js"></script>
-<script type="text/javascript" src="/static/js/jock-citypicker-2.0.js"></script>
 
 <script type="text/javascript">
 	$(function() {
@@ -148,41 +265,26 @@ online booking system
 		$("#id_date").datepicker({
 			dateFormat : 'yy-mm-dd'
 		});
-
-		var c = document.getElementById("id_start");
-
-		var fn1 = function(city) {
-			c.value = city;
-		};
-		c.onclick = function() {
-			citypicker.show({
-				left : 300,
-				top : 300,
-				selected : fn1
-			});
-		};
-
-		var d = document.getElementById("id_des");
-
-		var fn2 = function(city) {
-			d.value = city;
-		};
-		d.onclick = function() {
-			citypicker.show({
-				left : 300,
-				top : 350,
-				selected : fn2
-			});
-		};
-
+		x = $('#id_start');
+		
+		x.attr('data-provide',"typeahead");
+		x.attr('data-items',"4");
+		x.attr('data-source','["BeiJing","HangZhou","WenZhou","ShangHai","GuangZhou"]');
+		x.attr('autocomplete',"off")
+		x = $('#id_des');
+		
+		x.attr('data-provide',"typeahead");
+		x.attr('data-items',"4");
+		x.attr('data-source','["BeiJing","HangZhou","WenZhou","ShangHai","GuangZhou"]');
+		x.attr('autocomplete',"off")
 		function hide_this() {
 			if ($("#id_I_or_D").children('option:selected').val() == '0') {
 				$("#id_sort_by").val(0);
-				$("#id_sort_by").attr("hidden", true);
-				$("[for ='id_sort_by']").attr('hidden', true);
+				$("#id_sort_by").hide();
+				$("[for ='id_sort_by']").hide();
 			} else {
-				$("#id_sort_by").attr("hidden", false);
-				$("[for ='id_sort_by']").attr('hidden', false);
+				$("#id_sort_by").show();
+				$("[for ='id_sort_by']").show();
 			}
 		}
 

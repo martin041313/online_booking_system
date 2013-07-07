@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% block title %}ensure your flight booking{% endblock %}
+
+{% block content %}
+<div class="span2">
+	<div class="well sidebar-nav">
+		<ul class="nav nav-list">
+			<li class="nav-header">
+				Search
+			</li>
+			<li>
+				<a href="/booking/hotel/">search hotel</a>
+			</li>
+			<li>
+				<a href="/booking/flight/">search flight</a>
+			</li>
+			<li class="nav-header">
+				your records
+			</li>
+			<li>
+				<a href="/booking/my_record/flight/">your flight records</a>
+			</li>
+			<li>
+				<a href="/booking/my_record/hotel/">your hotel records</a>
+			</li>
+
+		</ul>
+	</div><!--/.well -->
+</div><!--/span-->
+
+<div class="span10">
+	<div class="row-fluid well">
+
+		<p>
+			ensure your flight booking
+		</p>
+
+		<div class="span3">
+			<dl>
+				<dt>
+					starting and destination city:
+				</dt>
+				<dd>
+					from {{f.starting_id}} to {{f.destination_id}}
+				</dd>
+
+				<dt>
+					starting time:
+				</dt>
+				<dd>
+					{{f.leave_date}} {{f.leave_time}}
+				</dd>
+
+				<dt>
+					arrive time:
+				</dt>
+				<dd>
+					{{f.arrive_date}} {{f.arrive_time}}
+				</dd>
+			</dl>
+		</div>
+		<div class="span3">
+			<dl>
+				<dt>
+					company:
+				</dt>
+				<dd>
+					{{f.company_id}}
+				</dd>
+				<dt>
+					plane_type:
+				</dt>
+				<dd>
+					{{f.plane_type}}
+				</dd>
+				<dt>
+					none_stop:
+				</dt>
+				<dd>
+					{{f.none_stop}}
+				</dd>
+			</dl>
+		</div>
+		<div class="span3">
+			<dl>
+				<dt>
+					company:
+				</dt>
+				<dd>
+					{{f.company_id}}
+				</dd>
+				<dt>
+					left seat:
+				</dt>
+				<dd>
+					{{f.leave_number}}
+				</dd>
+				<dt>
+					price:
+				</dt>
+				<dd>
+					{{f.price}}
+				</dd>
+			</dl>
+		</div>
+		<table class="table table-bordered table-striped">
+
+			<caption>
+				the other who have experienced it:
+			</caption>
+			<thead>
+				<tr>
+					<th>#</th>
+					<th scope="col" >who</th>
+					<th scope="col" >comment</th>
+					<th scope="col" >scores</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				{% for s in sr%}
+
+				<tr class="row">
+					<td>{{s.user_id}}</td><td>{{s.comment}}</td><td>{{s.scores}}</td>
+				</tr>
+
+				{% endfor %}
+
+			</tbody>
+		</table>
+		<div class="pagination">
+			<ul>
+				{% if sr.has_previous %}
+				<li>
+					<a href="?p={{ sr.previous_page_number }}">previous</a>
+				</li>
+				{% endif %}
+				<li class="active">
+					<a>Page {{ sr.number }} of {{ sr.paginator.num_pages }}.</a>
+				</li>
+				{% if sr.has_next %}
+				<li>
+					<a href="?p={{ sr.next_page_number }}">next</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+	<div class="row-fluid well" >
+
+		<form class="form-horizontal" action="" method="post">
+			{% csrf_token %}
+			<input type="hidden" name="post" value="yes" />
+
+			<fieldset>
+				<div id="legend" class="">
+					<legend class="">
+						submit your book request
+					</legend>
+				</div>
+				<div class="control-group">
+
+					<!-- Text input-->
+					<label class="control-label" for="input01">the number of ticket you want to book</label>
+					<div class="controls">
+						<input type="number" value="1" class="input-xlarge" name="num"/>
+						<p class="help-block">
+							do not book ticket more than it can hold
+						</p>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<div class="controls">
+
+						<button type="submit" class="btn">
+							submit
+						</button>
+					</div>
+				</div>
+
+			</fieldset>
+		</form>
+	</div><!--/row-->
+
+</div>
+{% endblock %}
+

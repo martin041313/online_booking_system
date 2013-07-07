@@ -1,6 +1,5 @@
-{% extends "base.html" %}
+{% extends "dbase.html" %}
 {% block title %}show all my flight record{% endblock %}
-
 
 {% block content %}
 <div class="span2">
@@ -18,92 +17,170 @@
 			<li class="nav-header">
 				your records
 			</li>
+			
+			<li>
+				<a href="/booking/my_record/hotel/">your hotel records</a>
+			</li>
 			<li>
 				<a href="/booking/my_record/flight/">your flight records</a>
-			</li>
-			<li  class="active">
-				<a href="/booking/my_record/hotel/">your hotel records</a>
 			</li>
 
 		</ul>
 	</div><!--/.well -->
 </div><!--/span-->
 
-<div class="span10">
-	<div class="hero-unit">
-		
-		<p>
-			Here is all your hotel record.
-		</p>
-	</div>
+<div class="span9">
+	
 	<div class="row-fluid">
-		<div class="span4">
+		<div class="span12">
 			<div class="bs-docs-example">
-				<table class="table table-striped table-bordered">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>name</th>
-							<th>hotel star</th>
-							<th>img</th>
-							<th>address</th>
-							<th>phone_number</th>
-							<th>city</th>
-							<th>price</th>
-							<th>room_type</th>
-							<th>hot_level</th>
-							<th>scores</th>
-							<th>book number</th>
-							<th>book time</th>
-							<th>book date</th>
-							<th>your comment for the flight</th>
-							<th>your score for the flight</th>
-						</tr>
-					</thead>
-
-					<tbody>
-
-						{% for rr in rs %}
-						<tr>
-							<td>{{rr.id}}</td>
-							<td>{{rr.hotel_id.name}}</td>
-							<td>{{rr.hotel_id.hotel_star}} stars</td>
-							<td><img src="/{{rr.hotel_id.img_url}}"></td>
-							<td>{{rr.hotel_id.address}}</td>
-							<td>{{rr.hotel_id.phone_number}}</td>
-							<td>{{rr.hotel_id.city_id}}</td>
-							<td>{{rr.hotel_id.price}}</td>
-							<td> {%ifequal rr.hotel_id.room_type '1'%}
-								standard
-								{%else%}
-								
-									big
-								{%endifequal%}
-								</td>
-							
-							<td>{{rr.hotel_id.hot_level}}</td>
-							<td>{%ifequal  rr.hotel_id.scores -1 %}
-								no one comment
-								{%else%}
-								{{rr.hotel_id.scores}}
-								{%endifequal %}
-								</td>
-							<td>{{rr.num}}</td>
-							<td>{{rr.book_date}}</td>
-							<td>{{rr.book_time}}</td>
-							{%ifequal  rr.scores -1 %}
-							<td colspan="2"><a href="/booking/my_record/hotel/{{rr.pk}}/" class="btn">make comment now</a></td>
-							{%else%}
-							<td> {{rr.comment}}</td><td> {{rr.scores}} </td>
-							{%endifequal %}
-						</tr>
-
-						{% endfor %}
-
+				{% for rr in rs%}
+				<div class="well">
+					<div class=" row-fluid">
 						
+						<div class="span4">
+							{{rr.hotel_id.name}}
+							<img src="/{{rr.hotel_id.img_url}}">
+						</div>
+						<div class="span4">
+							<dl class="dl-horizontal">
+								
 
-					</tbody>
-				</table>
+								<dt>
+									city
+								</dt>
+								<dd>
+									{{rr.hotel_id.city_id}}
+								</dd>
+								<dt>
+									address
+								</dt>
+								<dd>
+									{{rr.hotel_id.address}}
+								</dd>
+
+								<dt>
+									phone number
+								</dt>
+								<dd>
+									{{rr.hotel_id.phone_number}}
+								</dd>
+								<dt>
+									room type
+								</dt>
+								<dd>
+									{%ifequal rr.hotel_id.room_type '1'%}
+									standard
+									{%else%}
+
+									big
+									{%endifequal%}
+								</dd>
+								<dt>
+									hotel star
+								</dt>
+								<dd>
+									{{rr.hotel_id.hotel_star}} stars
+								</dd>
+
+								<dt>
+									hot level
+								</dt>
+								<dd>
+									{{rr.hotel_id.hot_level}}
+								</dd>
+								<dt>
+									scores
+								</dt>
+								<dd>
+									{%ifequal  rr.hotel_id.scores -1 %}
+									no one comment
+									{%else%}
+									{{rr.hotel_id.scores}}
+									{%endifequal %}
+								</dd>
+								<dt>
+									price / (person day)
+								</dt>
+								<dd>
+									{{rr.hotel_id.price}}
+								</dd>
+
+							</dl>
+						</div>
+						<div class="span4">
+
+							<dl class="dl-horizontal">
+
+								<dt>
+									book date and time
+								</dt>
+								<dd>
+									{{rr.book_date}} and  {{rr.book_time}}
+								</dd>
+								<dt>
+									your score
+								</dt>
+								<dd>
+									{%ifequal  rr.scores -1 %}
+									<a href="/booking/my_record/hotel/{{rr.pk}}/" class="btn">comment now</a>
+									{%else%}
+									{{rr.scores}}
+									{%endifequal %}
+								</dd>
+								<dt>
+									your comment
+								</dt>
+								<dd>
+
+									{{rr.comment}}&nbsp;
+								</dd>
+
+								<dt>
+									checkin_date
+								</dt>
+								<dd>
+									{{rr.checkin_date}}
+								</dd>
+
+								<dt>
+									last date
+								</dt>
+								<dd>
+									{{rr.last}}
+								</dd>
+
+								<dt>
+									book number
+								</dt>
+								<dd>
+									{{rr.num}}
+								</dd>
+
+								<dt>
+									total price
+								</dt>
+								<dd>
+									{{rr.price}}
+								</dd>
+								<dt>
+									payment status
+								</dt>
+								<dd>
+									{%ifequal  rr.stat '0' %} <a href="/booking/my_record/hotel/payment/{{rr.pk}}/" class="btn">pay now</a> {%else%}
+									payed
+									{%endifequal %}
+								</dd>
+
+							</dl>
+
+						</div>
+
+					</div>
+
+				</div>
+				{% endfor %}
+
 				<div class="pagination">
 					<ul>
 						{% if rs.has_previous %}
@@ -119,6 +196,7 @@
 							<a href="?p={{ rs.next_page_number }}">next</a>
 						</li>
 						{% endif %}
+
 					</ul>
 				</div>
 			</div><!--/span-->

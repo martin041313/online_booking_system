@@ -25,4 +25,8 @@ urlpatterns = patterns('',
                     url(r'^my_record/hotel/$','booking.views.my_hotel_record'),
                     url(r'^my_record/flight/(?P<pk_id>\d+)/$','booking.views.flight_record_view'),
                     url(r'^my_record/hotel/(?P<pk_id>\d+)/$','booking.views.hotel_record_view'),
+                    url(r'^my_record/flight/payment/(?P<pk_id>\d+)/$','booking.views.pay_flight'),
+                    url(r'^my_record/hotel/payment/(?P<pk_id>\d+)/$','booking.views.pay_hotel'),
+                    url(r'^flight2/(?P<pk_id>\d+)/$','booking.views.get_flight'),
+                    url(r'^hotel2/(?P<pk_id>\d+)/$','booking.views.get_hotel'),
 )

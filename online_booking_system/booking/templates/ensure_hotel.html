@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+{% block title %}ensure your flight booking{% endblock %}
+
+{% block content %}
+<div class="span2">
+	<div class="well sidebar-nav">
+		<ul class="nav nav-list">
+			<li class="nav-header">
+				Search
+			</li>
+			<li>
+				<a href="/booking/hotel/">search hotel</a>
+			</li>
+			<li>
+				<a href="/booking/flight/">search flight</a>
+			</li>
+			<li class="nav-header">
+				your records
+			</li>
+			<li>
+				<a href="/booking/my_record/flight/">your flight records</a>
+			</li>
+			<li>
+				<a href="/booking/my_record/hotel/">your hotel records</a>
+			</li>
+
+		</ul>
+	</div><!--/.well -->
+</div><!--/span-->
+
+<div class="span9">
+	<div class="row-fluid well">
+
+		<p>
+			ensure your hotel room booking
+		</p>
+		<div class="well">
+			<div class=" row-fluid">
+				<div class="span4">
+					<img src="/{{h.img_url}}">
+				</div>
+				<div class="span4">
+					<dl class="dl-horizontal">
+						<dt>
+							name
+						</dt>
+						<dd>
+							{{h.name}}
+						</dd>
+
+						<dt>
+							city
+						</dt>
+						<dd>
+							{{h.city_id}}
+						</dd>
+						<dt>
+							address
+						</dt>
+						<dd>
+							{{h.address}}
+						</dd>
+
+						<dt>
+							phone number
+						</dt>
+						<dd>
+							{{h.phone_number}}
+						</dd>
+						<dt>
+							room type
+						</dt>
+						<dd>
+							{%ifequal h.room_type '1'%}
+							standard
+							{%else%}
+
+							big
+							{%endifequal%}
+						</dd>
+					</dl>
+				</div>
+				<div class="span4">
+
+					<dl class="dl-horizontal">
+						<dt>
+							hotel star
+						</dt>
+						<dd>
+							{{h.hotel_star}} stars
+						</dd>
+
+						<dt>
+							hot level
+						</dt>
+						<dd>
+							{{h.hot_level}}
+						</dd>
+						<dt>
+							scores
+						</dt>
+						<dd>
+							{%ifequal  h.scores -1 %}
+							no one comment
+							{%else%}
+							{{h.scores}}
+							{%endifequal %}
+						</dd>
+
+						<dt>
+							price
+						</dt>
+						<dd>
+							{{h.price}}
+						</dd>
+					</dl>
+
+				</div>
+
+			</div>
+
+		</div>
+		<table class="table table-bordered table-striped">
+			<caption>you want to book this things:</caption>
+			<thead>
+				<tr>
+
+					<th scope="col" >#</th>
+					<th scope="col" >date</th>
+					<th scope="col" >left room number</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				{% for r in rs%}
+
+				<tr class="row">
+					<td>{{r.date}}</td><td>{{r.room_number}}</td>
+				</tr>
+
+				{% endfor %}
+
+			</tbody>
+		</table>
+		<table class="table table-bordered table-striped">
+			<caption>the other who have experienced it:</caption>
+			<thead>
+				<tr>
+					<th scope="col" >#</th>
+					<th scope="col" >who</th>
+					<th scope="col" >comment</th>
+					<th scope="col" >scores</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				{% for s in sr%}
+
+				<tr class="row">
+					<td>{{s.user_id}}</td><td>{{s.comment}}</td><td>{{s.scores}}</td>
+				</tr>
+
+				{% endfor %}
+
+			</tbody>
+		</table>
+		<div class="pagination">
+			<ul>
+				{% if sr.has_previous %}
+				<li>
+					<a href="?p={{ sr.previous_page_number }}">previous</a>
+				</li>
+				{% endif %}
+				<li class="active">
+					<a>Page {{ sr.number }} of {{ sr.paginator.num_pages }}.</a>
+				</li>
+				{% if sr.has_next %}
+				<li>
+					<a href="?p={{ sr.next_page_number }}">next</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+	<div class="row-fluid well" >
+
+		<form class="form-horizontal" action="" method="post">
+			{% csrf_token %}
+			<input type="hidden" name="post" value="yes" />
+
+			<fieldset>
+				<div id="legend" class="">
+					<legend class="">
+						submit your book request
+					</legend>
+				</div>
+				<div class="control-group">
+
+					<!-- Text input-->
+					<label class="control-label" for="input01">the number of ticket you want to book</label>
+					<div class="controls">
+						<input type="number" value="1" class="input-xlarge" name="num">
+						<p class="help-block">
+							do not book room more than it can hold
+						</p>
+					</div>
+				</div>
+
+				<button type="submit" class="btn">
+					Submit
+				</button>
+
+			</fieldset>
+		</form>
+	</div><!--/row-->
+
+</div>
+{% endblock %}
+
